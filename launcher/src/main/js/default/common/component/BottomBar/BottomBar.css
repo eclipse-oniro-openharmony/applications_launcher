@@ -15,6 +15,31 @@
 
 @import '../../css/CommonPageStyle.css';
 
-.app-name {
-    color: white;
+.systemApp {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
+
+.bottomBarContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.app-box {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    justify-content: center;
+}
+
+.app-box:focus {
+    transform: scale(1.1, 1.1);
+}
+
+
+
