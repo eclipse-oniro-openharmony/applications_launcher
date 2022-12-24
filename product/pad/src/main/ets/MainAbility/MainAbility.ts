@@ -4,7 +4,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,19 +24,17 @@ import { GestureNavigationManager } from '@ohos/gesturenavigation';
 import StyleConstants from '../common/constants/StyleConstants';
 import { navigationBarCommonEventManager }  from '@ohos/common';
 import PageDesktopViewModel from '../../../../../../feature/pagedesktop/src/main/ets/default/viewmodel/PageDesktopViewModel';
-import usb from '@ohos.usb';
-import inputDevice from '@ohos.multimodalInput.inputDevice';
 
 const TAG = 'LauncherMainAbility';
 
 export default class MainAbility extends ServiceExtension {
   onCreate(want: Want): void {
     Log.showInfo(TAG,'onCreate start');
+    this.context.area = 0;
     this.initLauncher();
   }
 
   async initLauncher(): Promise<void> {
-    this.initInputDevices();
     // init Launcher context
     globalThis.desktopContext = this.context;
 
@@ -79,21 +77,6 @@ export default class MainAbility extends ServiceExtension {
       .then((dis: { id: number, width: number, height: number, refreshRate: number }): void => {
         gestureNavigationManage.initWindowSize(dis);
       });
-  }
-
-  private initInputDevices(): void {
-    // Set the input device type upon startup.
-    let usbDevices: Array<Readonly<usb.USBDevice>> = usb.getDevices();
-    if (usbDevices?.length) {
-      AppStorage.SetOrCreate('inputDeviceType', 'add');
-    }
-    // register listening for an input device
-    inputDevice.on('change', (data: inputDevice.DeviceListener) => {
-      if (data?.type) {
-        Log.showDebug(TAG, `inputDeviceType: ${data.type}, inputDeviceId: ${data.deviceId}`);
-        AppStorage.SetOrCreate('inputDeviceType', data.type);
-      }
-    });
   }
 
   onDestroy(): void {

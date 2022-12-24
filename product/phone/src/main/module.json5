@@ -6,7 +6,14 @@
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.launcher.MainAbility",
     "deviceTypes": [
-      "default"
+      "default",
+      "tablet"
+    ],
+    "metadata": [
+      {
+        "name": "ArkTSPartialUpdate",
+        "value": "true"
+      }
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
