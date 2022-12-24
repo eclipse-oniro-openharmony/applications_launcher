@@ -274,7 +274,7 @@ export struct FolderOpenComponent {
   private saveText() {
     if (this.isRenaming) {
       this.isRenaming = false;
-      if (this.newFolderName && this.newFolderName != this.mFolderInfo.folderName) {
+      if (this.newFolderName.trim().length !=0 && this.newFolderName) {
         this.mFolderInfo.folderName = this.newFolderName;
         mBigFolderViewModel.modifyFolderName(this.mFolderInfo)
       }
@@ -480,7 +480,7 @@ struct FolderAppItem {
     }),
     cancel: () => {
     },
-    autoCancel: true,
+    autoCancel: false,
     customStyle: true
   });
 
@@ -502,7 +502,7 @@ struct FolderAppItem {
       appLabelId: this.item.appLabelId
     }),
     cancel: this.cancelFormDialog,
-    autoCancel: true,
+    autoCancel: false,
     customStyle: true
   });
 

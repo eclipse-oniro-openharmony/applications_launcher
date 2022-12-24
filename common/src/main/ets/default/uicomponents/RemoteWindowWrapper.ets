@@ -239,7 +239,7 @@ export struct RemoteWindowWrapper {
         remoteVo.count = remoteVo.count + 1;
       } else {
         remoteVo = new RemoteVo(
-        RemoteConstants.TYPE_START_APP_FROM_LAUNCHER,
+          RemoteConstants.TYPE_START_APP_FROM_LAUNCHER,
           startAppTypeFromPageDesktop,
           startingWindowTarget,
           startAppIconInfo,
@@ -269,7 +269,7 @@ export struct RemoteWindowWrapper {
         remoteVo.count = remoteVo.count + 1;
       } else {
         remoteVo = new RemoteVo(
-        RemoteConstants.TYPE_START_APP_FROM_LAUNCHER,
+          RemoteConstants.TYPE_START_APP_FROM_LAUNCHER,
           startAppTypeFromPageDesktop,
           startingWindowTarget,
           startAppIconInfo,
@@ -299,7 +299,7 @@ export struct RemoteWindowWrapper {
         remoteVo.count = remoteVo.count + 1;
       } else {
         remoteVo = new RemoteVo(
-        RemoteConstants.TYPE_START_APP_FROM_LAUNCHER,
+          RemoteConstants.TYPE_START_APP_FROM_LAUNCHER,
           startAppTypeFromPageDesktop,
           startingWindowTarget,
           startAppIconInfo,
@@ -318,7 +318,7 @@ export struct RemoteWindowWrapper {
       const remoteWindowKey = toWindowTarget.bundleName + toWindowTarget.abilityName;
       const startAppTypeFromPageDesktop: number = AppStorage.Get('startAppTypeFromPageDesktop');
       const remoteVo = new RemoteVo(
-      RemoteConstants.TYPE_APP_TRANSITION,
+        RemoteConstants.TYPE_APP_TRANSITION,
         startAppTypeFromPageDesktop,
         toWindowTarget,
         {},
@@ -345,11 +345,11 @@ export struct RemoteWindowWrapper {
         remoteVo.count = remoteVo.count + 1;
       } else {
         remoteVo = new RemoteVo(
-        RemoteConstants.TYPE_MINIMIZE_WINDOW,
+          RemoteConstants.TYPE_MINIMIZE_WINDOW,
           startAppTypeFromPageDesktop,
           minimizingWindowTarget,
-        appInfo.iconInfo,
-        appInfo.appItemInfo,
+          appInfo.iconInfo,
+          appInfo.appItemInfo,
           undefined,
           finishCallback
         );
@@ -373,11 +373,11 @@ export struct RemoteWindowWrapper {
         remoteVo.appItemInfo = appInfo.appItemInfo;
       } else {
         remoteVo = new RemoteVo(
-        RemoteConstants.TYPE_MINIMIZE_WINDOW,
+          RemoteConstants.TYPE_MINIMIZE_WINDOW,
           startAppTypeFromPageDesktop,
           closingWindowTarget,
-        appInfo.iconInfo,
-        appInfo.appItemInfo,
+          appInfo.iconInfo,
+          appInfo.appItemInfo,
           undefined,
           finishCallback
         );
@@ -406,8 +406,8 @@ export struct RemoteWindowWrapper {
       const count = remoteVo.count;
       localEventManager.sendLocalEventSticky(EventConstants.EVENT_ANIMATION_START_APPLICATION, null);
       animateTo({
-        duration: 180,
-        delay: 100,
+        duration: 50,
+        delay: 50,
         curve: Curve.Friction,
         onFinish: () => {
         }
@@ -417,9 +417,9 @@ export struct RemoteWindowWrapper {
       })
 
       animateTo({
-        duration: 500,
+        duration: 370,
         // @ts-ignore
-        curve: curves.springMotion(0.32, 0.99, 0),
+        curve: curves.springMotion(0.25, 0.99, 0),
         onFinish: () => {
           callback.onAnimationFinish();
           Trace.end(Trace.CORE_METHOD_START_APP_ANIMATION);
@@ -453,9 +453,9 @@ export struct RemoteWindowWrapper {
       const count = remoteVo.count;
       localEventManager.sendLocalEventSticky(EventConstants.EVENT_ANIMATION_CLOSE_APPLICATION, null);
       animateTo({
-        duration: 700,
+        duration: 370,
         // @ts-ignore
-        curve: curves.springMotion(0.40, 0.99, 0),
+        curve: curves.springMotion(0.25, 0.99, 0),
         onFinish: () => {
           callback.onAnimationFinish();
           Trace.end(Trace.CORE_METHOD_CLOSE_APP_ANIMATION);
@@ -480,8 +480,8 @@ export struct RemoteWindowWrapper {
       })
 
       animateTo({
-        duration: 140,
-        delay: 350,
+        duration: 50,
+        delay: 50,
         curve: Curve.Friction,
         onFinish: () => {
         }
@@ -493,7 +493,7 @@ export struct RemoteWindowWrapper {
     } else if (remoteVo.remoteAnimationType  == RemoteConstants.TYPE_APP_TRANSITION) {
       const callback = Object.assign(finishCallback);
       animateTo({
-        duration: 500,
+        duration: 300,
         curve: Curve.Friction,
         onFinish: () => {
           callback.onAnimationFinish();
@@ -550,6 +550,10 @@ export struct RemoteWindowWrapper {
         }
       }, (item) => item.remoteWindowKey)
     }
+    .width(StyleConstants.PERCENTAGE_100)
+    .height(StyleConstants.PERCENTAGE_100)
+    .focusable(false)
+    .enabled(false)
   }
 }
 

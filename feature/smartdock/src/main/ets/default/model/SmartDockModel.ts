@@ -36,6 +36,7 @@ import SmartDockCloseAppHandler from '../common/SmartDockCloseAppHandler';
 import { SmartDockStyleConfig } from '../config/SmartDockStyleConfig';
 import { SmartDockLayoutConfig } from '../config/SmartDockLayoutConfig';
 import SmartDockConstants from '../common/constants/SmartDockConstants';
+import { RecentMissionInfo } from '@ohos/common';
 
 const TAG = 'SmartDockModel';
 const KEY_NAME = 'name';
@@ -167,7 +168,7 @@ export default class SmartDockModel {
       return;
     }
     let recents: RecentBundleMissionInfo[] = [];
-    const missionInfos: {
+    let missionInfos: {
       appName: string,
       bundleName: string,
       missionInfoList: MissionInfo[]
@@ -185,6 +186,9 @@ export default class SmartDockModel {
       recents = recents.slice(0, this.mSmartDockStyleConfig.mMaxRecentNum);
     }
     AppStorage.SetOrCreate('recentList', recents);
+
+    missionInfos = missionInfos.slice(0,20);
+
     AppStorage.SetOrCreate('missionInfoList', missionInfos);
     Log.showDebug(TAG, `getRecentDataList end, recentList.length: ${recents.length}`);
   }
@@ -427,22 +431,17 @@ export default class SmartDockModel {
   private registerMissionListener(): void {
     Log.showDebug(TAG, 'registerMissionListener');
     const listener: MissionListener = {
-      onMissionCreated: this.onMissionCreatedCallback.bind(this),
+      onMissionCreated: () => {},
       onMissionDestroyed: this.onMissionDestroyedCallback.bind(this),
       onMissionSnapshotChanged: this.onMissionSnapshotChangedCallback.bind(this),
       onMissionMovedToFront: this.onMissionMovedToFrontCallback.bind(this),
       onMissionIconUpdated: () => {},
       // @ts-ignore
       onMissionClosed: () => {},
+      // @ts-ignore
       onMissionLabelUpdated: () => {}
     };
     missionManager.registerMissionListener(listener);
-  }
-
-  onMissionCreatedCallback(missionId: number): void {
-    Log.showInfo(TAG, 'onMissionCreatedCallback, missionId=' + missionId);
-    this.getRecentDataList().then(() => {}, () => {});
-    this.getRecentViewDataList(missionId).then(() => {}, () => {});
   }
 
   /**
@@ -452,9 +451,24 @@ export default class SmartDockModel {
     let mRecentMissionsList = await amsMissionManager.getRecentMissionsList();
     Log.showDebug(TAG, `getRecentMissionsList length: ${mRecentMissionsList.length}`);
     const snapShotTime = new Date().toString();
-    mRecentMissionsList.find(item => {
+
+    let recentMissionInfoIndex = mRecentMissionsList.findIndex(item => {
       return item.missionId === missionId;
-    }).snapShotTime = snapShotTime;
+    })
+    if (recentMissionInfoIndex != -1) {
+      let recentMissionInfo: RecentMissionInfo = {
+        missionId: mRecentMissionsList[recentMissionInfoIndex].missionId,
+        appIconId: mRecentMissionsList[recentMissionInfoIndex].appIconId,
+        appLabelId: mRecentMissionsList[recentMissionInfoIndex].appLabelId,
+        appName: mRecentMissionsList[recentMissionInfoIndex].appName,
+        bundleName: mRecentMissionsList[recentMissionInfoIndex].bundleName,
+        moduleName: mRecentMissionsList[recentMissionInfoIndex].moduleName,
+        abilityName: mRecentMissionsList[recentMissionInfoIndex].abilityName,
+        lockedState: mRecentMissionsList[recentMissionInfoIndex].lockedState,
+        snapShotTime: snapShotTime
+      }
+      mRecentMissionsList[recentMissionInfoIndex] = recentMissionInfo;
+    }
     AppStorage.SetOrCreate('recentMissionsList', mRecentMissionsList);
   }
 
