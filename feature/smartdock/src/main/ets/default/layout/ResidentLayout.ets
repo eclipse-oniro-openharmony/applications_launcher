@@ -149,8 +149,7 @@ struct AppItem {
         moduleName: this.appInfo.moduleName,
         icon: ResourceManager.getInstance().getCachedAppIcon(this.appInfo.appIconId,
           this.appInfo.bundleName, this.appInfo.moduleName),
-        badgeNumber: CommonConstants.BADGE_DISPLAY_HIDE,
-        badgeHideState: true
+        badgeNumber: CommonConstants.BADGE_DISPLAY_HIDE
       })
     }
   }

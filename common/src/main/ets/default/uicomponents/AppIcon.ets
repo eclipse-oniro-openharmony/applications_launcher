@@ -28,7 +28,6 @@ export struct AppIcon {
   moduleName: string;
   @State icon: string = '';
   @State badgeNumber: number = 0;
-  @State badgeHideState: boolean = false;
   @State iconScale: number = 1;
   useCache: boolean = true;
   badgeFontSize: number = StyleConstants.DEFAULT_BADGE_FONT_SIZE;
@@ -68,10 +67,10 @@ export struct AppIcon {
         count: this.badgeNumber,
         maxCount: StyleConstants.MAX_BADGE_COUNT,
         style: {
-          color: this.badgeHideState ? Color.Transparent : StyleConstants.DEFAULT_FONT_COLOR,
+          color: StyleConstants.DEFAULT_FONT_COLOR,
           fontSize: this.badgeFontSize,
           badgeSize: (this.badgeNumber > 0 ? StyleConstants.DEFAULT_BADGE_SIZE : 0),
-          badgeColor: this.badgeHideState ? Color.Transparent : Color.Red
+          badgeColor: Color.Red
         }
       }) {
         Image(this.icon)
