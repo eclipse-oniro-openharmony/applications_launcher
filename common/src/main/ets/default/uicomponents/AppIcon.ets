@@ -22,18 +22,28 @@ const TAG = 'AppIcon';
 
 @Component
 export struct AppIcon {
+  @StorageLink('isDrag') @Watch('updateAppIcon') mIsDrag: boolean = false;
   iconSize: number;
   iconId: string;
   bundleName: string;
   moduleName: string;
   @State icon: string = '';
-  badgeNumber: number = 0;
+  @State badgeNumber: number = 0;
+  @State badgeHideState: boolean = false;
   @State iconScale: number = 1;
   useCache: boolean = true;
   badgeFontSize: number = StyleConstants.DEFAULT_BADGE_FONT_SIZE;
   private mResourceManager;
   private mBadgeManager;
   private mDefaultAppIcon;
+  updateAppIcon() {
+    let dragItemInfo = AppStorage.Get('dragItemInfo');
+    if (this.mIsDrag && dragItemInfo?.bundleName === this.bundleName && dragItemInfo?.moduleName === this.moduleName) {
+      this.badgeHideState = true;
+    } else {
+      this.badgeHideState = false;
+    }
+  }
 
   aboutToAppear(): void  {
     this.mResourceManager = ResourceManager.getInstance();
@@ -67,10 +77,10 @@ export struct AppIcon {
         count: this.badgeNumber,
         maxCount: StyleConstants.MAX_BADGE_COUNT,
         style: {
-          color: StyleConstants.DEFAULT_FONT_COLOR,
+          color: this.badgeHideState ? Color.Transparent : StyleConstants.DEFAULT_FONT_COLOR,
           fontSize: this.badgeFontSize,
           badgeSize: (this.badgeNumber > 0 ? StyleConstants.DEFAULT_BADGE_SIZE : 0),
-          badgeColor: Color.Red
+          badgeColor: this.badgeHideState ? Color.Transparent : Color.Red
         }
       }) {
         Image(this.icon)
