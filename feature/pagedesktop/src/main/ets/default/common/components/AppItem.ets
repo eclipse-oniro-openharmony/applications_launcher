@@ -113,7 +113,8 @@ export default struct AppItem {
         bundleName: this.item.bundleName,
         moduleName: this.item.moduleName,
         icon: ResourceManager.getInstance().getCachedAppIcon(this.item.appIconId, this.item.bundleName, this.item.moduleName),
-        badgeNumber: this.item.badgeNumber
+        badgeNumber: this.item.badgeNumber,
+        badgeHideState: true
       })
     }
   }

@@ -22,7 +22,6 @@ const TAG = 'AppIcon';
 
 @Component
 export struct AppIcon {
-  @StorageLink('isDrag') @Watch('updateAppIcon') mIsDrag: boolean = false;
   iconSize: number;
   iconId: string;
   bundleName: string;
@@ -36,14 +35,6 @@ export struct AppIcon {
   private mResourceManager;
   private mBadgeManager;
   private mDefaultAppIcon;
-  updateAppIcon() {
-    let dragItemInfo = AppStorage.Get('dragItemInfo');
-    if (this.mIsDrag && dragItemInfo?.bundleName === this.bundleName && dragItemInfo?.moduleName === this.moduleName) {
-      this.badgeHideState = true;
-    } else {
-      this.badgeHideState = false;
-    }
-  }
 
   aboutToAppear(): void  {
     this.mResourceManager = ResourceManager.getInstance();
