@@ -61,6 +61,18 @@ export default struct SwiperPage {
     this.mAppListInfo = this.appListInfo.appGridInfo[this.swiperPage];
   }
 
+  /**
+   * 监听桌面元素变化时，更新打开的大文件的数据。
+   * eg：应用角标更新时，大文件内的应用角标同步更新。
+   */
+  updateOpenFolderData() {
+    const openFolderData = AppStorage.Get('openFolderData') as any;
+    if (openFolderData?.folderId && this.mAppListInfo.length) {
+      let temp = this.mAppListInfo.find((item: GridLayoutItemInfo) => item?.folderId === openFolderData.folderId);
+      AppStorage.SetOrCreate('openFolderData', temp as any);
+    }
+  }
+
   updateDeskTopScreen(): void {
     Log.showInfo(TAG, 'updateDeskTopScreen');
     this.mPageDesktopStyleConfig = this.mPageDesktopViewModel.getPageDesktopStyleConfig();
