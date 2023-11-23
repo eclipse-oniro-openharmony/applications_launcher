@@ -59,6 +59,7 @@ export default struct SwiperPage {
 
   private updateAppListInfo(): void {
     this.mAppListInfo = this.appListInfo.appGridInfo[this.swiperPage];
+    this.updateOpenFolderData();
   }
 
   /**
