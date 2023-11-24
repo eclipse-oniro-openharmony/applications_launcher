@@ -151,9 +151,6 @@ export default struct SwiperPage {
         AppStorage.SetOrCreate('selectDesktopAppItem', '');
       }
     })
-    .onClick(() => {
-      AppStorage.SetOrCreate('selectDesktopAppItem', '')
-    })
     .onDragEnter((event: DragEvent, extraParams: string) => {
       Log.showInfo(TAG, `onDragEnter extraParams: ${extraParams}, event: [${event.getX()}, ${event.getY()}]`);
     })
