@@ -27,7 +27,7 @@ export struct AppIcon {
   bundleName: string;
   moduleName: string;
   @State icon: string = '';
-  badgeNumber: number = 0;
+  @State badgeNumber: number = 0;
   @State iconScale: number = 1;
   useCache: boolean = true;
   badgeFontSize: number = StyleConstants.DEFAULT_BADGE_FONT_SIZE;
