@@ -17,7 +17,7 @@
 import { AppMenu } from '@ohos/common';
 import { AppIcon } from '@ohos/common';
 import { DockItemInfo } from '@ohos/common';
-import { CommonConstants } from '@ohos/common';
+import { CommonConstants, BadgeManager } from '@ohos/common';
 import { StyleConstants } from '@ohos/common';
 import { ResourceManager } from '@ohos/common';
 import { Log } from '@ohos/common';
@@ -115,6 +115,11 @@ export default struct ResidentLayout {
       .onDrop((event: DragEvent, extraParams: string) => {
         Log.showInfo(TAG, `onDrop event: [${event.getX()}, ${event.getY()}]`);
         const dragResult = globalThis.SmartDockDragHandler.onDragDrop(event.getX(), event.getY());
+        const dragItemInfo = AppStorage.Get('dragItemInfo');
+        Log.showInfo(TAG, `onDrop dragItemInfo: ${JSON.stringify(dragItemInfo)}`)
+        if (dragItemInfo?.bundleName) {
+          BadgeManager.getInstance().updateBadgeNumber(dragItemInfo.bundleName, dragItemInfo.badgeNumber);
+        }
         AppStorage.SetOrCreate('selectAppIndex', null);
         AppStorage.SetOrCreate('isDrag', false);
         if (!dragResult) {

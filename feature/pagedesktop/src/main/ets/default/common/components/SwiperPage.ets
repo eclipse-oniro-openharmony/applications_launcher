@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Log } from '@ohos/common';
+import { BadgeManager, Log } from '@ohos/common';
 import { CommonConstants } from '@ohos/common';
 import { PresetStyleConstants } from '@ohos/common';
 import { localEventManager } from '@ohos/common';
@@ -176,6 +176,11 @@ export default struct SwiperPage {
       if (dragItemType === CommonConstants.DRAG_FROM_DESKTOP
       || (dragItemType === CommonConstants.DRAG_FROM_DOCK && (AppStorage.Get('deviceType') === CommonConstants.DEFAULT_DEVICE_TYPE || AppStorage.Get('deviceType') === 'default'))) {
         const dragResult = globalThis.PageDesktopDragHandler.onDragDrop(event.getX(), event.getY());
+        const dragItemInfo = AppStorage.Get('dragItemInfo') as GridLayoutItemInfo;
+        Log.showInfo(TAG, `onDrop dragItemInfo: ${JSON.stringify(dragItemInfo)}}`)
+        if (dragItemInfo.bundleName) {
+          BadgeManager.getInstance().updateBadgeNumber(dragItemInfo.bundleName, dragItemInfo.badgeNumber);
+        }
         Log.showInfo(TAG, `onDrop dragResult: ${dragResult}`);
         AppStorage.SetOrCreate('selectAppIndex', null);
         AppStorage.SetOrCreate('isDrag', false);
