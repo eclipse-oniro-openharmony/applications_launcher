@@ -256,6 +256,7 @@ class WindowManager {
       globalThis.recentMode = mode;
       win.setWindowMode(mode).then();
     } : (win) => {
+      windowManager.minimizeAllApps();
       globalThis.recentMode = featureAbility.AbilityWindowConfiguration.WINDOW_MODE_FULLSCREEN;
       win.setFullScreen(true).then(() => {
         Log.showDebug(TAG, `${this.RECENT_WINDOW_NAME} setFullScreen`);
