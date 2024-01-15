@@ -88,6 +88,7 @@
                 <filteritem type="filepath" name="NOTICE" desc="Open source component js-pinyin"/>
                 <filteritem type="filepath" name="README.OpenSource" desc="Open source component js-pinyin"/>
             </filefilter>
+            <policyitem type="license" name="Pinyin.ts" path="common/src/main/ets/default/utils/Pinyin.ts" rule="may" group="defaultGroup" filefilter="defaultPolicyFilter" desc=""/>
         </filefilterlist>
     </oatconfig>
 </configuration>
