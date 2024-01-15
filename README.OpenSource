@@ -1,0 +1,10 @@
+[
+    {
+        "Name": "js-pinyin",
+        "License": "MIT license",
+        "License File": "COPYING", 
+        "Version Number": "0.2.5",
+        "Upstream URL": "https://github.com/waterchestnut/pinyin",
+        "Description": "汉字转换拼音，需要es6语法(let、class等)支持，不依赖其他组件"
+    }
+]
