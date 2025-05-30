@@ -154,17 +154,6 @@ struct EntryView {
             PageDesktopLayout();
           }
           .height(this.workSpaceHeight)
-          .onAreaChange((oldValue: Area, newValue: Area) => {
-            Log.showDebug(TAG, `onAreaChange navigationBarStatus: ${this.navigationBarStatus}`);
-            if (JSON.stringify(oldValue) == JSON.stringify(newValue)) {
-              return;
-            }
-            if (this.navigationBarStatus == '1') {
-              setTimeout(() => {
-                SettingsModel.getInstance().setValue(this.navigationBarStatus);
-              }, 50)
-            }
-          })
 
           Column() {
             SmartDock();
